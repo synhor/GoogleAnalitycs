@@ -31,6 +31,54 @@ define([
         baseClass: 'analitycs',
         name: 'analitycs',
 
+        bindAppEvents:function() {
+            // 1. map zoom
+            /*
+            on(this.map, 'zoom-end', function(evt){
+                console.log('[GoogleAnalitycs] map zoom event. Sending data...')
+                ga('widgetTracker.send', {
+                    hitType: 'event',
+                    eventCategory: 'Map',
+                    eventAction: 'zoom',
+                    eventLabel: 'MapZoomLevel:' + evt.level
+                })   
+            })
+            */
+
+            // 2. map navigate
+            /*
+            on(this.map, 'pan-end', function(evt){
+                console.log('[GoogleAnalitycs] map navigate event. Sending data...')
+                ga('widgetTracker.send', {
+                    hitType: 'event',
+                    eventCategory: 'Map',
+                    eventAction: 'navigate',
+                    eventLabel: 'MapNavigateEvent'
+                })   
+            })
+            */
+
+            
+            // 3. widget open
+            /*
+            topic.subscribe('widgetTracker.onOpen', function(widget){
+                // filtr widżetów
+                if (!widget.inPanel && widget.name != 'AttributeTable') {
+                    return;
+                }
+                console.log('[GoogleAnalitycs] widget open event for '+ widget.name + '. Sending data...')
+                //ga('widgetTracker.send', 'pageview','MN_Widget/' + widget.name);
+                
+                ga('widgetTracker.send', {
+                    hitType: 'event',
+                    eventCategory: 'Widgets',
+                    eventAction: 'open',
+                    eventLabel: widget.name
+                })                        
+            });
+            */
+        },
+
         startup: function() {
             var head = query('head')[0];
             var reg = /<[script][^>]*>[^<]*/g;
@@ -47,22 +95,7 @@ define([
                     script.src= srcStr;
                     analiticsId = srcStr.match(regId)[0].split('=')[1];
                     ga('create', analiticsId, 'auto', 'widgetTracker');
-                    // 1. otwarcie widgetu
-                    topic.subscribe('widgetTracker.onOpen', function(widget){
-                        // filtr widżetów
-                        if (!widget.inPanel && widget.name != 'AttributeTable') {
-                            return;
-                        }
-                        console.log('[GoogleAnalitycs] widget open event. Sending data...')
-                        //ga('widgetTracker.send', 'pageview','MN_Widget/' + widget.name);
-                        
-                        ga('widgetTracker.send', {
-                            hitType: 'event',
-                            eventCategory: 'Widgets',
-                            eventAction: 'open',
-                            eventLabel: widget.name
-                        })                        
-                    });                                        
+                    this.bindAppEvents();
                 } else {
                     script.textContent = res.split('>')[1];
                 }            
