@@ -58,8 +58,9 @@ define([
             })
             */
 
-            
+
             // 3. widget open
+            // UWAGA!!! W pliku /jumu.js/WidgetManager.js w metodzie WidgetManager::onOpen dodaj: topic.publish('widgetTracker.onOpen', widget)
             /*
             topic.subscribe('widgetTracker.onOpen', function(widget){
                 // filtr widżetów
