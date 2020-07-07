@@ -95,6 +95,7 @@ define([
                     var srcStr = srcAttrMatch[0].split('="')[1];
                     script.src= srcStr;
                     analiticsId = srcStr.match(regId)[0].split('=')[1];
+                    // tworzymy GA tracker
                     ga('create', analiticsId, 'auto', 'widgetTracker');
                     this.bindAppEvents();
                 } else {
